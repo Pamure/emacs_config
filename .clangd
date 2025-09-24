@@ -1,0 +1,42 @@
+# This is a YAML file.
+
+# --- Common Settings for BOTH C and C++ ---
+# These flags and includes will apply to all source files.
+CompileFlags:
+  Add:
+    - -Wall
+    - -Iinclude
+    - -Isrc
+
+---
+
+# --- Settings specifically for C++ files ---
+If:
+  PathMatch: .*\.(cpp|hpp|cc|cxx)$
+
+CompileFlags:
+  Add:
+    - -std=c++17
+    # System/Library Include Directories (from your g++ output)
+    - -I/usr/include/c++/13
+    - -I/usr/include/x86_64-linux-gnu/c++/13
+    - -I/usr/include/c++/13/backward
+    - -I/usr/lib/gcc/x86_64-linux-gnu/13/include
+    - -I/usr/local/include
+    - -I/usr/include/x86_64-linux-gnu
+    - -I/usr/include
+
+---
+
+# --- Settings specifically for C files ---
+If:
+  PathMatch: .*\.(c|h)$
+
+CompileFlags:
+  Add:
+    - -std=c17 # Use a C standard like c11 or c17
+    # System/Library Include Directories (from your gcc output)
+    - -I/usr/lib/gcc/x86_64-linux-gnu/13/include
+    - -I/usr/local/include
+    - -I/usr/include/x86_64-linux-gnu
+    - -I/usr/include
