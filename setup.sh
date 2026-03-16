@@ -164,24 +164,24 @@ cat > "$ACTUAL_HOME/.config/doom/init.el" << 'INIT_EOF'
        (default +bindings))
 INIT_EOF
 
-cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
-;;; habiticasync.el -*- lexical-binding: t; -*-
+cat > "$ACTUAL_HOME/.config/doom/casync.el" << 'CA_EOF'
+;;; casync.el -*- lexical-binding: t; -*-
 
-(defun abbas/habitica-sync-to-org ()
-  "Intelligently sync Habitica tasks to ~/f/notes-org-mode/todo.org."
+(defun abbas/ca-sync-to-org ()
+  "Intelligently sync ca tasks to ~/f/notes-org-mode/todo.org."
   (interactive)
   (let* ((file "~/f/notes-org-mode/todo.org")
-         (tasks (habitica-api-get-tasks))
-         (tags-list (habitica-api-get-tags)))
+         (tasks (ca-api-get-tasks))
+         (tags-list (ca-api-get-tags)))
     (with-current-buffer (find-file-noselect file)
-      (abbas/update-section "Habitica Habits"
+      (abbas/update-section "ca Habits"
                            (abbas/generate-habits tasks tags-list))
-      (abbas/update-section "Habitica Dailies"
+      (abbas/update-section "ca Dailies"
                            (abbas/generate-dailies tasks tags-list))
-      (abbas/update-section "Habitica Todos"
+      (abbas/update-section "ca Todos"
                            (abbas/generate-todos tasks tags-list))
       (save-buffer))
-    (message "Habitica sync complete!")))
+    (message "ca sync complete!")))
 
 (defun abbas/update-section (heading new-content)
   "Update or create a top-level section with HEADING."
@@ -201,7 +201,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
 (defun abbas/generate-habits (tasks tags-list)
   "Generate complete Habits section content as a string."
   (with-temp-buffer
-    (insert "* Habitica Habits\n")
+    (insert "* ca Habits\n")
     (dolist (task tasks)
       (when (string= (alist-get 'type task) "habit")
         (let* ((text (alist-get 'text task))
@@ -220,7 +220,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
 (defun abbas/generate-dailies (tasks tags-list)
   "Generate complete Dailies section content as a string."
   (with-temp-buffer
-    (insert "* Habitica Dailies\n")
+    (insert "* ca Dailies\n")
     (dolist (task tasks)
       (when (string= (alist-get 'type task) "daily")
         (let* ((text (alist-get 'text task))
@@ -252,7 +252,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
 (defun abbas/generate-todos (tasks tags-list)
   "Generate complete Todos section content as a string."
   (with-temp-buffer
-    (insert "* Habitica Todos\n")
+    (insert "* ca Todos\n")
     (dolist (task tasks)
       (when (string= (alist-get 'type task) "todo")
         (let* ((text (alist-get 'text task))
@@ -277,7 +277,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
     (buffer-string)))
 
 (defun abbas/build-tag-string (priority task-tags tags-list)
-  "Build Org tags string combining priority and Habitica tags."
+  "Build Org tags string combining priority and ca tags."
   (let ((tags '()))
     (when task-tags
       (dolist (tag-id task-tags)
@@ -307,7 +307,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
      (replace-regexp-in-string "[^a-zA-Z0-9_@]" "_" tag-name))))
 
 (defun abbas/priority-to-tag (priority)
-  "Convert Habitica priority number to tag string."
+  "Convert ca priority number to tag string."
   (cond
    ((= priority 0.1) "trivial")
    ((= priority 1.0) "easy")
@@ -316,7 +316,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
    (t nil)))
 
 (defun abbas/build-schedule (next-due repeat)
-  "Build Org schedule string with repeater from Habitica data."
+  "Build Org schedule string with repeater from ca data."
   (let* ((base-date (if (and next-due (listp next-due))
                         (car next-due)
                       next-due))
@@ -334,7 +334,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
           (format "%s +1d>" date-str))))))
 
 (defun abbas/frequency-to-repeater (frequency every-x)
-  "Convert Habitica frequency to Org repeater syntax."
+  "Convert ca frequency to Org repeater syntax."
   (let ((interval (if (> every-x 1) (format "%d" every-x) "")))
     (cond
      ((string= frequency "daily") (format "+%sd" interval))
@@ -352,7 +352,7 @@ cat > "$ACTUAL_HOME/.config/doom/habiticasync.el" << 'HABITICA_EOF'
                 (nth 5 parsed)
                 (nth 4 parsed)
                 (nth 3 parsed))))))
-HABITICA_EOF
+CA_EOF
 
 cat > "$ACTUAL_HOME/.config/doom/config.el" << 'CONFIG_EOF'
 ;;; $DOOMDIR/config.el -*- lexical-binding: t; -*-
@@ -491,14 +491,14 @@ cat > "$ACTUAL_HOME/.config/doom/config.el" << 'CONFIG_EOF'
       (:prefix ("o" . "open")
        :desc "Ace Window" "x" #'ace-window))
 
-(use-package! habitica
+(use-package! ca
   :defer t
-  :commands (habitica-api-get-tasks
-             habitica-api-user
-             habitica-api-task-create)
+  :commands (ca-api-get-tasks
+             ca-api-user
+             ca-api-task-create)
   :init
-  (setq habitica-uid "3338c747-984f-40ee-a696-605765cc7f2c"
-        habitica-token "fac04bd8-5efb-4260-b78b-fdef3c41cb30"))
+  (setq habitica-uid "namonamonamo"
+        habitica-token "tokiktokttiktok"))
 
 (after! vterm
   (setq vterm-shell "/usr/bin/zsh"
