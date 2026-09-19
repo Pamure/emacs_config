@@ -172,7 +172,7 @@ sudo npm install -g pyright typescript typescript-language-server \
 
 ```sh
 git clone https://github.com/doomemacs/doomemacs ~/.config/emacs
-git -C ~/.config/emacs checkout 7e98f188f3ff686ba82e138dcaebfd7bb22af9a0   # v2.2.0, 2026-07-15
+git -C ~/.config/emacs checkout -b doom-pinned 7e98f188f3ff686ba82e138dcaebfd7bb22af9a0  # v2.2.0, 2026-07-15
 git -C ~/.config/emacs submodule update --init --recursive                 # sources/doom+ @ c8f828c08 (26.07.0)
 git clone https://github.com/Pamure/emacs_config ~/.config/doom            # this repo == $DOOMDIR
 cp ~/.config/doom/config.local.el.example ~/.config/doom/config.local.el   # then edit it
@@ -189,7 +189,10 @@ and modules need ≥29.1 — Arch's 31.1 satisfies both. See §8 for the
 `doom install` also runs `doom env`, which snapshots your shell environment
 (incl. any exported API keys) into `~/.config/emacs/env`. That file is
 machine-local, not part of any repo — it exists so Emacs started from the
-desktop launcher still sees your PATH.
+desktop launcher still sees your PATH. Run `doom env` again **from a fresh login
+shell** once zsh/conda/nvm are set up, otherwise the snapshot misses those PATH
+entries (`jupyter-executable` is pinned absolutely and `conda-env-activate`
+fixes pyright, so only nvm-installed servers are affected).
 
 ### 4.5 The OpenRouter key (gptel + minuet)
 

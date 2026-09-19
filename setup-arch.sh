@@ -264,7 +264,9 @@ step_doom() {
   if [ ! -x "${EMACSDIR}/bin/doom" ]; then
     log "cloning Doom core into ${EMACSDIR} @ ${DOOM_COMMIT:0:9}"
     git clone "$DOOM_REPO" "$EMACSDIR"
-    git -C "$EMACSDIR" checkout --quiet "$DOOM_COMMIT"
+    # pin on a real branch (not a detached HEAD) so `doom install` and later
+    # `git` operations in $EMACSDIR always have a branch to report
+    git -C "$EMACSDIR" checkout --quiet -b doom-pinned "$DOOM_COMMIT"
   else
     log "Doom core already installed: $("${EMACSDIR}/bin/doom" version | head -2 | tr '\n' ' ')"
   fi
@@ -346,6 +348,8 @@ cat <<'NEXT'
 Done. Now verify (in a NEW zsh login shell, so PATH/conda/docker group apply):
 
   doom doctor                                  # should end with "Everything seems fine"
+  doom env                                     # re-snapshot PATH from this login shell
+                                               # (so Emacs sees conda/nvm/flutter)
   doom sync                                    # after any init.el/packages.el edit
   emacs --version                              # Emacs 31.1 (config was built on 30.2)
   fc-match "JetBrainsMono Nerd Font Mono"      # -> JetBrainsMonoNerdFontMono-Regular.ttf
