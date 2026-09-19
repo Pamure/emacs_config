@@ -1,0 +1,47 @@
+# -*- mode: snippet -*-
+# name: dsatmp
+# key: dsatmp
+# group: Competitive Programming
+# --
+ // Bismillah Hirrehmaan Nirraheem
+#include <bits/stdc++.h>
+using namespace std;
+
+// Type aliases
+using ll = long long;
+using ld = long double;
+using vi = vector<int>;
+using vll = vector<long long>;
+using pii = pair<int, int>;
+using pll = pair<long long, long long>;
+
+// Macros
+#define fastio ios::sync_with_stdio(false); cin.tie(nullptr);
+#define all(x) (x).begin(), (x).end()
+#define pb push_back
+#define ff first
+#define ss second
+
+// Debugging (disabled in online judges)
+#ifndef ONLINE_JUDGE
+#define debug(x) cerr << #x << " = " << (x) << endl;
+#else
+#define debug(x)
+#endif
+
+// Constants
+const ll INF = 1e18;
+const ll MOD = 1e9 + 7;
+
+// Function templates
+void solve() {
+    $0
+}
+
+int main() {
+    fastio;
+    int t = 1;
+    // cin >> t;
+    while (t--) solve();
+    return 0;
+}

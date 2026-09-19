@@ -1,0 +1,24 @@
+# ── Emacs/Doom byte code + local state ────────────────────────────────────
+*.elc
+*.eln
+*.eln.old
+#!*.el
+auto-save-list/
+eln-cache/
+.transient/
+
+# ── Editor/OS junk ───────────────────────────────────────────────────────
+*.swp
+*.swo
+*~
+\#*\#
+.\#*
+*:Zone.Identifier
+
+# ── Vendored dependency (setup-arch.sh clones it here) ────────────────────
+# rejeep/drag-stuff.el — a separate git repo, so never nested in this one.
+lisp/
+
+# ── Credentials / machine-specific values ────────────────────────────────
+# Copy config.local.el.example -> config.local.el and fill it in.
+config.local.el

@@ -1,0 +1,30 @@
+providers:
+  bai:
+    # The base URL points to the v1 endpoint matching your curl example
+    baseUrl: https://api.b.ai/v1
+    
+    # omp automatically checks if 'B_API_TOKEN' exists as an environment 
+    # variable before falling back to a raw string
+    apiKey: B_API_TOKEN
+    
+    # Injects 'Authorization: Bearer' into the headers
+    authHeader: true
+    
+    # Tells omp to use the OpenAI chat completions format
+    api: openai-completions
+    
+    # CRITICAL: Proxy layers fronting Anthropic/Claude models often fail 
+    # when OpenAI's "strict" JSON schema tool calling is forced. 
+    disableStrictTools: true
+    
+    discovery:
+      # Tells omp to automatically fetch all 44 models via the /v1/models endpoint
+      type: openai-models-list
+  xkiro:
+    baseUrl: https://api.xkiro.com/v1
+    apiKey: XKIRO_API_KEY       # omp reads this env var, not a literal in the file
+    authHeader: true            # sends Authorization: Bearer <key>
+    api: openai-completions
+    disableStrictTools: true    # xkiro proxies Anthropic models — keep this
+    discovery:
+      type: openai-models-list  # auto-pulls xkiro's full model catalog

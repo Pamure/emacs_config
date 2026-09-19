@@ -1,0 +1,63 @@
+;;; config.local.el --- machine/person-specific overrides (NOT tracked in git) -*- lexical-binding: t; -*-
+;;
+;; Copy me:
+;;     cp config.local.el.example config.local.el
+;; then fill in the values below.
+;;
+;; config.el loads this file LAST (`(load! "config.local" nil 'noerror)'), so
+;; anything set here wins over the tracked config.  It is optional — if it is
+;; missing, everything else still loads; only the features below stay empty.
+;;
+;; config.local.el is listed in .gitignore.  Keep it that way: this is the only
+;; file that is allowed to hold credentials.
+;;; Code:
+
+;; ── Identity ──────────────────────────────────────────────────────────────
+(setq user-mail-address "you@example.com")
+
+;; ── Habitica (used by `habitica' pkg + habiticasync.el) ───────────────────
+;; Where to find both values: https://habitica.com/user/settings/api
+;; (User ID is shown there next to the API Token — do not use your login
+;; password.)
+(setq habitica-uid   "YOUR_HABITICA_USER_ID"
+      habitica-token "YOUR_HABITICA_API_TOKEN")
+
+;; ── MySQL / MariaDB quick-connect (`M-x sql-mysql', sql-mode) ─────────────
+;; `sql-connection-alist' tuples are (NAME (sql-product …) (sql-server …)
+;; (sql-database …) (sql-user …) (sql-password …)).  Omit sql-password for an
+;; empty/local-socket login; Emacs prompts when it is missing.
+(setq sql-connection-alist
+      '((muzaffarpur
+         (sql-product 'mysql)
+         (sql-server "localhost")
+         (sql-database "twentysix")
+         (sql-user "abbas"))
+        (mario
+         (sql-product 'mysql)
+         (sql-server "localhost")
+         (sql-database "DBMSproj")
+         (sql-user "abbas"))))
+
+;; ── Per-machine paths (only needed if you installed things elsewhere) ─────
+;; Defaults live in config.el as $HOME-relative paths:
+;;   ~/miniconda3                                     (conda + jupyter kernel)
+;;   ~/downloads/dev/flutter                          (dart/flutter LSP)
+;;   ~/f/notes-org-mode                                (org-directory)
+;;   ~/f/projects/godmode/mcp/org/godmode-org-helpers.el   (optional helper)
+;; Uncomment + change only if your layout differs, e.g.:
+;;
+;; (setq conda-anaconda-home (expand-file-name "~/miniforge3")
+;;       conda-env-home-directory (expand-file-name "~/miniforge3"))
+;;
+;; (setq flutter-sdk-path (expand-file-name "/opt/flutter"))
+;; (setq lsp-dart-flutter-sdk flutter-sdk-path)
+;; (setq lsp-dart-sdk-dir (expand-file-name "/opt/flutter/bin/cache/dart-sdk"))
+
+;; ── OpenRouter key (optional) ─────────────────────────────────────────────
+;; Normally NOT needed here.  gptel reads the key from ~/.authinfo via
+;; auth-source, and minuet reuses that same key — see dotfiles/authinfo.example.
+;; Only if you prefer an env var over authinfo:
+;;
+;; (setenv "OPENROUTER_API_KEY" "sk-or-v1-...")
+
+;;; config.local.el ends here

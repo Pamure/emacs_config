@@ -1,0 +1,24 @@
+# ~/.authinfo  — where the OpenRouter key lives on the machine
+#
+# This file is a *template*. The real one is NOT in this repo (it holds a
+# secret) and must never be committed.
+#
+#   cp dotfiles/authinfo.example ~/.authinfo
+#   chmod 600 ~/.authinfo
+#   # then replace REPLACE_WITH_YOUR_KEY with your real key
+#
+# Key source: https://openrouter.ai/keys  (starts with sk-or-v1-)
+#
+# Field layout — auth-source only needs `machine' + `password'; the rest is
+# convention. This exact shape is what this config was verified against:
+#
+machine openrouter.ai login apikey password REPLACE_WITH_YOUR_KEY
+#
+# Who reads it:
+#   * gptel   — config.el sets `:key #'gptel-api-key-from-auth-source'
+#   * minuet  — reads the same key at load time and exports
+#               OPENROUTER_API_KEY into the process environment
+# Nothing else in this config touches your secrets.
+#
+# Optional hardening: `gpg -c ~/.authinfo` produces ~/.authinfo.gpg, which
+# auth-source/epa reads transparently. Delete the plaintext file afterwards.

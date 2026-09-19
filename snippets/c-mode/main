@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: main
+# key: main
+# group: C
+# --
+// Bismillah Hirrehmaan nirraheem
+#include <stdio.h>
+
+int main(void) {
+    $0
+    return 0;
+}

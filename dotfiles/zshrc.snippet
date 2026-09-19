@@ -1,0 +1,33 @@
+# ─────────────────────────────────────────────────────────────────────────
+# Append to ~/.zshrc on the new machine.
+#
+# Why these lines exist — the Emacs config depends on them:
+#   * ~/.config/emacs/bin  -> the `doom' CLI must be on PATH
+#   * JAVA_HOME            -> jdtls (Java LSP) wants a JDK; config was
+#                             verified on Java 21, so Arch's java-21-openjdk
+#                             is pinned instead of the default JDK 26
+#   * ~/go/bin             -> config.el adds it to exec-path for lsp-mode
+#   * FLUTTER_HOME/bin     -> brings flutter's bundled dart/dart-sdk with it
+#                             (config.el points lsp-dart at the SDK inside)
+#   * conda                -> `conda init zsh` appends its own managed block
+#                             when miniconda is installed (setup-arch.sh does
+#                             that); don't add it by hand
+#   * nvm (optional)       -> harmless no-op if you use the distro nodejs
+# ─────────────────────────────────────────────────────────────────────────
+
+export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/.config/emacs/bin"
+
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk
+export PATH="$PATH:$JAVA_HOME/bin"
+
+export GOPATH="$HOME/go"
+export PATH="$PATH:$GOPATH/bin"
+
+export FLUTTER_HOME="$HOME/downloads/dev/flutter"
+export PATH="$PATH:$FLUTTER_HOME/bin"
+
+# Optional: only if you keep using nvm. The config needs *a* node on PATH
+# (pacman's nodejs is enough); nvm is only for switching versions.
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"

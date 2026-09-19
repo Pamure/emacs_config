@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: class-main
+# key: main
+# group: Java
+# --
+// Bismillah Hirrehmaan Nirraheem
+public class `(file-name-sans-extension (file-name-nondirectory (buffer-file-name)))` {
+    public static void main(String[] args) {
+        $0
+    }
+}

@@ -442,7 +442,7 @@ cat > "$ACTUAL_HOME/.config/doom/config.el" << 'CONFIG_EOF'
          (sql-user "abbas"))))
 
 (setq user-full-name "Pamure"
-      user-mail-address "murtazaprogrammer100@gmail.com")
+      user-mail-address "you@example.com")
 
 (display-time-mode t)
 

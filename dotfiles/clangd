@@ -1,0 +1,42 @@
+# clangd config (installs to ~/.clangd — a global fallback for every project
+# that doesn't ship its own .clangd). Read by clangd, NOT by Emacs.
+#
+# CHANGED from the old Ubuntu version: it hardcoded
+#   -I/usr/include/c++/13
+#   -I/usr/include/x86_64-linux-gnu/c++/13
+#   -I/usr/lib/gcc/x86_64-linux-gnu/13/include
+# i.e. Debian/Ubuntu GCC 13 paths. Those do not exist on Arch (GCC 16 there),
+# and clangd already asks the compiler driver for the right system include
+# paths on its own. Hardcoded ones only produce "file not found" noise and can
+# pin a stale stdlib, so they are gone.
+#
+# If a project genuinely needs extra system includes, regenerate them for the
+# machine instead of copying paths between distros:
+#     clang++ -E -x c++ - -v < /dev/null      # prints the search list
+#
+# --- Common flags: apply to C and C++ ---
+CompileFlags:
+  Add:
+    - -Wall
+    - -Iinclude
+    - -Isrc
+
+---
+
+# --- C++ files ---
+If:
+  PathMatch: .*\.(cpp|hpp|cc|cxx)$
+
+CompileFlags:
+  Add:
+    - -std=c++17
+
+---
+
+# --- C files ---
+If:
+  PathMatch: .*\.(c|h)$
+
+CompileFlags:
+  Add:
+    - -std=c17
